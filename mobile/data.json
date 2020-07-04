@@ -1,0 +1,58 @@
+[
+    {
+        "category": "Frágil",
+        "weight": "1kg",
+        "expected": "02/08/2020",
+        "address": {
+          "city": "Feira de Santana",
+          "uf": "BA",
+          "street": "Rua um",
+          "number": "001"
+        },
+        "latitude": "-23.0895106",
+        "longitude": "-46.9662692",
+        "freight": "30,00"
+    },
+    {
+        "category": "Urgente",
+        "weight": "3kg",
+        "expected": "23/07/2020",
+        "address": {
+          "city": "Fortaleza",
+          "uf": "CE",
+          "street": "Rua dois",
+          "number": "002"
+        },
+        "latitude": "-23.0895106",
+        "longitude": "-46.9662692",
+        "freight": "20,00"
+    },
+    {
+        "category": "Frágil",
+        "weight": "2kg",
+        "expected": "03/08/2020",
+        "address": {
+          "city": "Rio de Janeiro",
+          "uf": "RJ",
+          "street": "Rua tres",
+          "number": "003"
+        },
+        "latitude": "-23.0895106",
+        "longitude": "-46.9662692",
+        "freight": "50,00"
+    },
+    {
+        "category": "Frágil",
+        "weight": "2kg",
+        "expected": "12/08/2020",
+        "address": {
+          "city": "Feira de Santana",
+          "uf": "BA",
+          "street": "Rua quatro",
+          "number": "004"
+        },
+        "latitude": "-23.0895106",
+        "longitude": "-46.9662692",
+        "freight": "60,00"
+    }
+]
