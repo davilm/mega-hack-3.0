@@ -8,9 +8,10 @@ import * as Location from 'expo-location';
 import data from '../../../data.json';
 
 const Home = () => {
-	const [atual, setAtual] = useState('');
   const [final, setFinal] = useState('');
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+  const [atual, setAtual] = useState(String(initialPosition));
+
   const navigation = useNavigation();
     
   useEffect(() => {
@@ -33,14 +34,8 @@ const Home = () => {
 
     }
     loadPosition();
-  }, []);
 
-  function handleNavigateToDetails() {
-    navigation.navigate('Points', {
-      latitude: initialPosition[0],
-      longitude: initialPosition[1],
-    });
-  }
+  }, []);
 
   function handleNavigateBack() {
     navigation.goBack();
@@ -69,11 +64,11 @@ const Home = () => {
                   borderBottomColor: 'black',
                   borderBottomRightRadius: 0,
                 }]}
-                placeholder=" atasdasdsual"
-                value={atual}
+                placeholder="atasdasdsual"
+                value={String(initialPosition)}
                 autoCapitalize="characters"
                 autoCorrect={false}
-                onChangeText={setAtual}
+                onChangeText={setInitialPosition}
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'black', borderRadius: 10 }}>
@@ -83,7 +78,7 @@ const Home = () => {
                   width: '90%',
                   borderTopRightRadius: 0,
                 }]}
-                placeholder=" atasdasdsual"
+                placeholder="atasdasdsual"
                 value={final}
                 autoCapitalize="characters"
                 autoCorrect={false}
@@ -94,10 +89,12 @@ const Home = () => {
         </View>
 
         <View style={styles.footer}>
-          
+
           {data.map(response => (
-            <Card
+            <Card key={response.id}
+              initialPosition={String(initialPosition)}
               weight={response.weight}
+              volume={response.volume}
               expected={response.expected}
               uf={response.address.uf}
               city={response.address.city}
@@ -105,20 +102,14 @@ const Home = () => {
               number={response.address.number}
               category={response.category}
               color="blue"
-              latitude={response.latitude}
-              longitude={response.longitude}
+              latitudeCurrent={response.latitudeCurrent}
+              longitudeCurrent={response.longitudeCurrent}
+              latitudeDestination={response.latitudeDestination}
+              longitudeDestination={response.longitudeDestination}
               freight={response.freight}
               next="Detail"
             />
           ))}
-
-          {/* <Card weight="1kg" destination="Feira de Santana, BA" category="Frágil" color="blue" next="Detail" latitude={String(initialPosition[0])} longitude={String(initialPosition[1])}/>
-          <Card destination="Fortaleza, CE" category="Urgente" color="red" expected='23/07/2020'/>
-          <Card weight="3kg"destination="Rio de Janeiro, RJ" category="Frágil" color="green" expected='03/08/2020'/>
-          <Card destination="Feira de Santana, BA" category="Frágil" color="brown" expected='12/08/2020'/>
-          <Card />
-          <Card />
-          <Card /> */}
 
         </View>
       </View>

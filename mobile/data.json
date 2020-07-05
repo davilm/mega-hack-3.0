@@ -1,7 +1,9 @@
 [
     {
+        "id": "1",
         "category": "Frágil",
         "weight": "1kg",
+        "volume": "1m³",
         "expected": "02/08/2020",
         "address": {
           "city": "Feira de Santana",
@@ -9,13 +11,17 @@
           "street": "Rua um",
           "number": "001"
         },
-        "latitude": "-23.0895106",
-        "longitude": "-46.9662692",
+        "latitudeCurrent": "-23.0895106",
+        "longitudeCurrent": "-46.9662692",
+        "latitudeDestination": "-11.409874",
+        "longitudeDestination": "-41.280857",
         "freight": "30,00"
     },
     {
+        "id": "2",
         "category": "Urgente",
         "weight": "3kg",
+        "volume": "1m³",
         "expected": "23/07/2020",
         "address": {
           "city": "Fortaleza",
@@ -23,13 +29,17 @@
           "street": "Rua dois",
           "number": "002"
         },
-        "latitude": "-23.0895106",
-        "longitude": "-46.9662692",
+        "latitudeCurrent": "-23.0895106",
+        "longitudeCurrent": "-46.9662692",
+        "latitudeDestination": "-3.731862",
+        "longitudeDestination": "-38.526669",
         "freight": "20,00"
     },
     {
+        "id": "3",
         "category": "Frágil",
         "weight": "2kg",
+        "volume": "1m³",
         "expected": "03/08/2020",
         "address": {
           "city": "Rio de Janeiro",
@@ -37,13 +47,17 @@
           "street": "Rua tres",
           "number": "003"
         },
-        "latitude": "-23.0895106",
-        "longitude": "-46.9662692",
+        "latitudeCurrent": "-23.0895106",
+        "longitudeCurrent": "-46.9662692",
+        "latitudeDestination": "-22.9035",
+        "longitudeDestination": "-43.209622",
         "freight": "50,00"
     },
     {
+        "id": "4",
         "category": "Frágil",
         "weight": "2kg",
+        "volume": "1m³",
         "expected": "12/08/2020",
         "address": {
           "city": "Feira de Santana",
@@ -51,8 +65,10 @@
           "street": "Rua quatro",
           "number": "004"
         },
-        "latitude": "-23.0895106",
-        "longitude": "-46.9662692",
+        "latitudeCurrent": "-23.0895106",
+        "longitudeCurrent": "-46.9662692",
+        "latitudeDestination": "-11.409874",
+        "longitudeDestination": "-41.280857",
         "freight": "60,00"
     }
 ]

@@ -3,13 +3,15 @@ import { Feather as Icon, FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler';
 
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 
-import { View, StyleSheet, TouchableOpacity, Text, Image, Linking } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, Linking, Platform } from 'react-native';
 import Constants from 'expo-constants';
 
 interface Params {
+  initialPosition: String,
   weight: String,
+  volume: String,
   expected: String,
   uf: String,
   city: String,
@@ -17,92 +19,156 @@ interface Params {
   number: String,
   category: String,
   color: String,
-  latitude: String,
-  longitude: String,
+  latitudeCurrent: String,
+  longitudeCurrent: String,
+  latitudeDestination: String,
+  longitudeDestination: String,
   next: String,
 }
 
 const Detail = () => {
-    const navigation = useNavigation();
-    const route = useRoute();
+  const navigation = useNavigation();
+  const route = useRoute();
 
-    const routeParams = route.params as Params;
-    
-    const weight = routeParams.weight;
-    const expected = routeParams.expected;
-    const uf = routeParams.uf;
-    const city = routeParams.city;
-    const street = routeParams.street;
-    const number = routeParams.number;
-    const category = routeParams.category;
-    const color = routeParams.color;
-    const latitude = Number(routeParams.latitude);
-    const longitude = Number(routeParams.longitude);
+  const routeParams = route.params as Params;
+  
+  const initialPositions = routeParams.initialPosition;
+  const initialPosition = initialPositions.split(",");
 
-    function handleNavigateBack() {
-      navigation.goBack();
-    }
+  const weight = routeParams.weight;
+  const volume = routeParams.volume;
+  const expected = routeParams.expected;
+  const uf = routeParams.uf;
+  const city = routeParams.city;
+  const street = routeParams.street;
+  const number = routeParams.number;
+  const category = routeParams.category;
+  const color = routeParams.color;
 
-    function openGps (lat: Number, lng: Number) {
-      Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${lat}+${lng}`);
-    }
+  const latitudeCurrent = Number(routeParams.latitudeCurrent);
+  const longitudeCurrent = Number(routeParams.longitudeCurrent);
 
-    return (
-        <>
-            <View style={styles.container}>
-                <TouchableOpacity onPress={handleNavigateBack}>
-                    <Icon name="arrow-left" size={20} color='black' />
-                </TouchableOpacity>
+  const latitudeDestination = Number(routeParams.latitudeDestination);
+  const longitudeDestination = Number(routeParams.longitudeDestination);
 
-                <Text style={styles.pointName}>Carga {category}</Text>
-                <Text style={[styles.pointItems, {paddingLeft: 20}]}>Carga: {weight}</Text>
-                <Text style={[styles.pointItems, {paddingLeft: 20}]}>Entregar até: {expected}</Text>
+  function handleNavigateBack() {
+    navigation.goBack();
+  }
 
-                <View style={styles.address}>
-                    <Text style={[styles.addressTitle, {paddingLeft: 20}]}>Endereço</Text>
-                    <Text style={[styles.addressContent, {paddingLeft: 20}]}>{city}, {uf} - {street}, {number}</Text>
-                </View>
+  // function openGps (lat: Number, lng: Number) {
+  function openGps () {
+
+    // if (Platform.OS === 'ios') {
+
+    //   var scheme = 'maps:';
+    //   var url = scheme + `${lat},${lng}`;
+
+    //   Linking.openURL(url);
+
+    //   return;
+    // }
+
+    Linking.openURL(`https://www.google.com.br/maps/dir/${MyLoaction.latitude},${MyLoaction.longitude}/${LoadCurrent.latitude},${LoadCurrent.longitude}/${LoadDestination.latitude},${LoadDestination.longitude}`);
+
+  }
+
+  const MyLoaction = {
+    latitude: Number(initialPosition[0]),
+    longitude: Number(initialPosition[1])
+  }
+  const LoadCurrent = {
+    latitude: Number(latitudeCurrent),
+    longitude: Number(longitudeCurrent)
+  };
+
+  const LoadDestination = {
+    latitude: Number(latitudeDestination),
+    longitude: Number(longitudeDestination)
+  };
+
+  return (
+      <>
+          <View style={styles.container}>
+            <TouchableOpacity onPress={handleNavigateBack} style={{ marginLeft: -10 }}>
+                <Icon name="arrow-left" size={20} color='black' />
+            </TouchableOpacity>
+
+            <Text style={styles.pointName}>Carga {category}</Text>
+            <Text style={[styles.pointItems, {paddingLeft: 20}]}>Carga: {weight}</Text>
+            <Text style={[styles.pointItems, {paddingLeft: 20}]}>Volume: {volume}</Text>
+            <Text style={[styles.pointItems, {paddingLeft: 20}]}>Entregar até: {expected}</Text>
+
+            <View style={styles.address}>
+                <Text style={[styles.addressTitle, {paddingLeft: 20}]}>Endereço</Text>
+                <Text style={[styles.addressContent, {paddingLeft: 20}]}>{city}, {uf} - {street}, {number}</Text>
             </View>
-            <View style={styles.mapContainer}>
-              <MapView 
-                  style={styles.map} 
-                  loadingEnabled={Number(routeParams.latitude) === 0}
-                  initialRegion={{
-                      latitude: Number(routeParams.latitude),
-                      longitude: Number(routeParams.longitude),
-                      latitudeDelta: 0.014,
-                      longitudeDelta: 0.014,
-                  }}
+          </View>
+          <View style={styles.mapContainer}>
+            <MapView
+              style={{ flex: 1 }}
+              initialRegion={{
+                latitude: MyLoaction.latitude,
+                longitude: MyLoaction.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1
+              }}
+            >
+              <Marker
+                style={styles.mapMarker}
+                onPress={() => handleNavigateBack()}
+                coordinate={{
+                    latitude: MyLoaction.latitude,
+                    longitude: MyLoaction.longitude,
+                }}
               >
-                <Marker
-                  style={styles.mapMarker}
-                  onPress={() => handleNavigateBack()}
-                  coordinate={{
-                      latitude: Number(routeParams.latitude),
-                      longitude: Number(routeParams.longitude),
-                  }}
-              >
-                  <View style={styles.mapMarkerContainer}>
-                      <Image style={styles.mapMarkerImage} source={{ uri: "https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"}} />
-                      <Text style={styles.mapMarkerTitle}>Frete</Text>
+                <View style={styles.mapMarkerContainer}>
+                      <Text style={styles.mapMarkerTitle}>Você</Text>
                   </View>
-                </Marker>
-              </MapView>
-            </View>
-            <View style={styles.footer}>
-                <RectButton style={styles.button} onPress={() => openGps(latitude,longitude)}>
-                    <FontAwesome name="whatsapp" size={20} color='#FFF' />
-                    <Text style={styles.buttonText}>Map</Text>
-                </RectButton>
-            </View>
-        </>
-    );
+              </Marker>
+              <Marker
+                style={styles.mapMarker}
+                onPress={() => handleNavigateBack()}
+                coordinate={{
+                    latitude: LoadCurrent.latitude,
+                    longitude: LoadCurrent.longitude,
+                }}
+              >
+                <View style={styles.mapMarkerContainer}>
+                      <Text style={styles.mapMarkerTitle}>Encomenda</Text>
+                  </View>
+              </Marker>
+              <Marker
+                style={styles.mapMarker}
+                onPress={() => handleNavigateBack()}
+                coordinate={{
+                    latitude: LoadDestination.latitude,
+                    longitude: LoadDestination.longitude,
+                }}
+              >
+                <View style={styles.mapMarkerContainer}>
+                      <Text style={styles.mapMarkerTitle}>Destino</Text>
+                  </View>
+              </Marker>
+              <Polyline coordinates={[MyLoaction,LoadCurrent]} />
+              <Polyline coordinates={[LoadCurrent, LoadDestination]} />
+
+            </MapView>
+            
+          </View>
+          <View style={styles.footer}>
+              <RectButton style={styles.button} onPress={() => openGps()}>
+                  <FontAwesome name="whatsapp" size={20} color='#FFF' />
+                  <Text style={styles.buttonText}>Map</Text>
+              </RectButton>
+          </View>
+      </>
+  );
 };
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 32,
+      paddingHorizontal: 22,
       paddingTop: 20 + Constants.statusBarHeight,
     },
   
@@ -193,26 +259,20 @@ const styles = StyleSheet.create({
   
     mapMarkerContainer: {
       width: 90,
-      height: 70,
-      backgroundColor: '#34CB79',
-      flexDirection: 'column',
+      height: 40,
+      backgroundColor: 'white',
       borderRadius: 8,
       overflow: 'hidden',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center'
     },
   
-    mapMarkerImage: {
-      width: 90,
-      height: 45,
-      resizeMode: 'cover',
-    },
   
     mapMarkerTitle: {
       flex: 1,
       fontFamily: 'Roboto_400Regular',
-      color: '#FFF',
+      color: 'black',
       fontSize: 13,
-      lineHeight: 23,
     },
   });
 

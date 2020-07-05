@@ -4,7 +4,9 @@ import { Feather as Icon } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 interface Props {
+    initialPosition: String,
     weight: String,
+    volume: string,
     expected: String
     uf: String,
     city: String,
@@ -12,14 +14,18 @@ interface Props {
     number: String,
     category: String,
     color: String,
-    latitude: String,
-    longitude: String,
+    latitudeCurrent: String,
+    longitudeCurrent: String,
+    latitudeDestination: String,
+    longitudeDestination: String,
     freight: String,
     next: String,
 }
 
 export default function Card({
+    initialPosition,
     weight,
+    volume,
     expected,
     uf,
     city,
@@ -27,8 +33,10 @@ export default function Card({
     number,
     category,
     color="green",
-    latitude,
-    longitude,
+    latitudeCurrent,
+    longitudeCurrent,
+    latitudeDestination,
+    longitudeDestination,
     freight,
     next,
 }: Props) {
@@ -37,7 +45,9 @@ export default function Card({
 
     function onPress() {
         navigation.navigate('Detail', {
+            initialPosition,
             weight,
+            volume,
             expected,
             uf,
             city,
@@ -45,8 +55,10 @@ export default function Card({
             number,
             category,
             color,
-            latitude,
-            longitude,
+            latitudeCurrent,
+            longitudeCurrent,
+            latitudeDestination,
+            longitudeDestination,
             freight,
             next,
         });
@@ -62,7 +74,7 @@ export default function Card({
                     <View style={[ styles.box, styles.box3, { backgroundColor: `${color}` } ]} />
                     <View style={styles.box}>
                         <Text style={{ marginLeft: 10 }}>{city}, {uf}</Text>
-                        <Text style={{ marginLeft: 10 }}>{weight}</Text>
+                        <Text style={{ marginLeft: 10 }}>{weight} - {volume}</Text>
                     </View>
                     <View style={[styles.box, styles.box2, { justifyContent: 'space-between', padding: 7 }]} >
                         <Text>{category}</Text>
