@@ -31,7 +31,11 @@ const Home = () => {
           latitude,
           longitude
       ])
-
+      //Location for AVD
+      setInitialPosition([
+        -15.77972,
+        -47.92972
+      ])
     }
     loadPosition();
 
@@ -64,11 +68,11 @@ const Home = () => {
                   borderBottomColor: 'black',
                   borderBottomRightRadius: 0,
                 }]}
-                placeholder="atasdasdsual"
-                value={String(initialPosition)}
+                placeholder="Localização Atual"
+                // value={String(initialPosition)}
                 autoCapitalize="characters"
                 autoCorrect={false}
-                onChangeText={setInitialPosition}
+                // onChangeText={setInitialPosition}
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'black', borderRadius: 10 }}>
@@ -78,7 +82,7 @@ const Home = () => {
                   width: '90%',
                   borderTopRightRadius: 0,
                 }]}
-                placeholder="atasdasdsual"
+                placeholder="Destino"
                 value={final}
                 autoCapitalize="characters"
                 autoCorrect={false}
