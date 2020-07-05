@@ -5,12 +5,34 @@ import { useNavigation } from '@react-navigation/native';
 import Card from '../../components/Card';
 import * as Location from 'expo-location';
 
-import data from '../../../data.json';
+// import data from '../../../data.json';
+import api from '../../services/api';
+
+interface Data {
+  id: number;
+  initialPosition: string;
+  weight: string;
+  volume: string;
+  expected: string;
+  address: {
+    uf: string;
+    city: string;
+    street: string;
+    number: string;
+  }
+  category: string;
+  latitudeCurrent: string;
+  longitudeCurrent: string;
+  latitudeDestination: string;
+  longitudeDestination: string;
+  freight: string;
+}
 
 const Home = () => {
+  const [data, setData] = useState<Data[]>([]);
+
   const [final, setFinal] = useState('');
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
-  const [atual, setAtual] = useState(String(initialPosition));
 
   const navigation = useNavigation();
     
@@ -32,26 +54,28 @@ const Home = () => {
           longitude
       ])
       //Location for AVD
-      setInitialPosition([
-        -15.77972,
-        -47.92972
-      ])
+      // setInitialPosition([
+      //   -15.77972,
+      //   -47.92972
+      // ])
     }
     loadPosition();
 
   }, []);
 
-  function handleNavigateBack() {
-    navigation.goBack();
-  }
+  useEffect(() => {
+    api.get('/estabelecimentos').then(response => {
+        setData(response.data);
+    });
+}, []);
 
   return (
     <>
       <View style={styles.container}>
         <View style={{ marginTop: 20, marginBottom: 20, flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity onPress={() => handleNavigateBack}>
+          {/* <TouchableOpacity onPress={() => handleNavigateBack}>
             <Icon name="arrow-left" size={20} color='black' />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Text style={{ marginLeft: 5, fontSize: 20}}>
             Fretes
           </Text>
@@ -69,10 +93,10 @@ const Home = () => {
                   borderBottomRightRadius: 0,
                 }]}
                 placeholder="Localização Atual"
-                // value={String(initialPosition)}
+                value={String(initialPosition)}
                 autoCapitalize="characters"
                 autoCorrect={false}
-                // onChangeText={setInitialPosition}
+                onChangeText={setInitialPosition}
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'black', borderRadius: 10 }}>
