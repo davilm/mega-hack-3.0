@@ -2,7 +2,7 @@ package com.meli.frete.domain.enumeration;
 
 public enum Category {
 	FRAGIL(1,"Frágil"),
-	OUTRA(2,"Outra");
+	URGENTE(2,"Urgente");
 	
 	private int indice;
 	private String description;
