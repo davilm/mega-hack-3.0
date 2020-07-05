@@ -13,7 +13,7 @@ Fast Envios, uma solução que dá a oportunidade a todos que queiram ser entreg
 - [Expo](https://expo.io/)
 - [Java](https://www.java.com/)
 - [Maven](https://maven.apache.org/)
-- [MySq](https://www.mysql.com/)
+- [MySql](https://www.mysql.com/)
 - [Spring Tool Suit](https://spring.io/)
 - [Spring Rest](https://spring.io/)
 - [Spring Boot](https://spring.io/)
